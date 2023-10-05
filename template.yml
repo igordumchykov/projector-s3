@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates S3 bucket with object lock enabled and bucket for logs
+
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub "my-bucket-${AWS::AccountId}-${AWS::Region}"
+      ObjectLockEnabled: true
+      LoggingConfiguration:
+        DestinationBucketName: !Ref S3LogsBucket
+        LogFilePrefix: "logs/"
+      ObjectLockConfiguration:
+        ObjectLockEnabled: Enabled
+        Rule:
+          DefaultRetention:
+            Days: 1
+            Mode: GOVERNANCE
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+  S3LogsBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      AccessControl: LogDeliveryWrite
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
+
