@@ -36,7 +36,7 @@ Resources:
 
 1. Create a stack
 ```shell
-aws cloudformation create-stack --stack-name RestrictedBucketStack --template-body file:///Users/igordumchykov/Desktop/projector-aws-ec2/template.yml
+aws cloudformation create-stack --stack-name RestrictedBucketStack --template-body file:///<path-to-file>/template.yml
 ```
 
 2. Check buckets
